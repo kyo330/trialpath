@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Clients | Trial Path</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-deep: #0d3b2e;
+      --green-mid: #155c44;
+      --green-accent: #2aab78;
+      --off-white: #f5f9f7;
+      --text-muted: #5a7a6e;
+      --border: rgba(13,59,46,0.12);
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:'Outfit',sans-serif; background:var(--off-white); color:#0d1f18; }
+    .wrap { max-width:920px; margin:0 auto; padding:2rem 1rem 3rem; }
+    .top { display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+    .brand { font-family:'Cormorant Garamond',serif; color:var(--green-deep); font-size:1.6rem; text-decoration:none; font-weight:600; }
+    .brand em { color:var(--green-accent); font-style:normal; }
+    .nav a { color:var(--green-mid); text-decoration:none; margin-left:0.9rem; font-size:0.9rem; }
+    .card { margin-top:1.2rem; background:#fff; border:1px solid var(--border); padding:1.4rem; border-radius:6px; }
+    h1 { font-family:'Cormorant Garamond',serif; font-size:2.3rem; margin:0 0 .6rem; color:var(--green-deep); }
+    p { color:var(--text-muted); line-height:1.8; }
+    .actions { margin-top:1rem; display:flex; gap:.65rem; flex-wrap:wrap; }
+    .btn { display:inline-block; text-decoration:none; padding:.65rem .95rem; border-radius:4px; font-size:.86rem; font-weight:600; }
+    .btn-primary { background:var(--green-deep); color:#fff; }
+    .btn-ghost { border:1px solid var(--green-mid); color:var(--green-mid); background:#fff; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <a class="brand" href="index.html">Trial <em>Path</em></a>
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <section class="card">
+      <h1>For Clients</h1>
+      <p>Clients can submit role requirements and expected timelines so our team can deliver shortlists aligned to business priorities.</p>
+      <p>Need immediate support? Use our contact and booking page to choose an available date/time in your timezone.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="contact.html">Go to Contact & Booking</a>
+        <a class="btn btn-ghost" href="index.html">Back to Landing Page</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
