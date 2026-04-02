@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>CDM Course — TrialPath</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --navy:#0B1F3A;--teal:#0D7A6F;--teal-lt:#12A899;
+      --sand:#F4EFE6;--cream:#FDFAF5;--white:#fff;
+      --muted:#6B7A8D;--border:rgba(11,31,58,.12);
+      --shadow:0 8px 40px rgba(11,31,58,.10);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);overflow-x:hidden}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;height:68px;background:rgba(253,250,245,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+    .logo{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:.5rem}
+    .logo-dot{width:9px;height:9px;border-radius:50%;background:var(--teal-lt);display:inline-block}
+    .nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--muted);font-size:.9rem;font-weight:500;transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--navy)}
+    .btn-nav{background:var(--navy);color:#fff;padding:.55rem 1.3rem;border-radius:100px;font-size:.875rem;font-weight:600;text-decoration:none;transition:background .2s}
+    .btn-nav:hover{background:var(--teal)}
+
+    /* HERO */
+    .course-hero{padding:120px 6vw 80px;background:linear-gradient(135deg,#FDFAF5 0%,#EDF7F6 100%);position:relative;overflow:hidden}
+    .course-hero::after{content:'';position:absolute;right:-80px;top:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(13,122,111,.1),transparent 70%);pointer-events:none}
+    .course-hero::before{content:'';position:absolute;left:-60px;bottom:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(11,31,58,.05),transparent 70%);pointer-events:none}
+    .hero-inner{display:grid;grid-template-columns:1fr 400px;gap:4rem;align-items:center;max-width:1100px}
+    .hero-text{animation:fadeUp .7s ease both}
+    .page-tag{display:inline-block;background:rgba(13,122,111,.1);color:var(--teal);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .9rem;border-radius:100px;border:1px solid rgba(13,122,111,.2);margin-bottom:1.2rem}
+    .course-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,3.5vw,3rem);line-height:1.12;margin-bottom:1.2rem}
+    .course-hero h1 em{font-style:italic;color:var(--teal)}
+    .course-hero p{font-size:1rem;color:var(--muted);line-height:1.8;font-weight:300;max-width:520px;margin-bottom:2rem}
+    .hero-badges{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2rem}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--white);border:1px solid var(--border);border-radius:100px;padding:.35rem .85rem;font-size:.8rem;font-weight:500;color:var(--navy)}
+    .badge-dot{width:7px;height:7px;border-radius:50%;background:var(--teal-lt)}
+    .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn-primary{background:var(--navy);color:#fff;padding:.8rem 1.8rem;border-radius:100px;font-size:.9rem;font-weight:600;text-decoration:none;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.5rem}
+    .btn-primary:hover{background:var(--teal);transform:translateY(-1px)}
+    .btn-secondary{background:transparent;color:var(--navy);padding:.8rem 1.8rem;border-radius:100px;font-size:.9rem;font-weight:600;text-decoration:none;border:1.5px solid var(--border);transition:border-color .2s,color .2s}
+    .btn-secondary:hover{border-color:var(--teal);color:var(--teal)}
+
+    /* HERO CARD */
+    .hero-card{background:var(--white);border:1px solid var(--border);border-radius:24px;padding:2rem;box-shadow:var(--shadow);animation:fadeUp .7s .15s ease both}
+    .hc-header{background:linear-gradient(135deg,var(--navy),#163B6A);border-radius:16px;padding:1.5rem;margin-bottom:1.4rem;position:relative;overflow:hidden}
+    .hc-header::after{content:'';position:absolute;right:-20px;top:-20px;width:100px;height:100px;border-radius:50%;background:rgba(13,122,111,.25)}
+    .hc-emoji{font-size:2.5rem;margin-bottom:.5rem;position:relative;z-index:1}
+    .hc-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:#fff;position:relative;z-index:1}
+    .hc-sub{font-size:.8rem;color:rgba(255,255,255,.6);position:relative;z-index:1;margin-top:.2rem}
+    .hc-items{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.4rem}
+    .hc-item{display:flex;align-items:center;gap:.75rem;font-size:.875rem;color:var(--navy)}
+    .hc-item .ic{width:32px;height:32px;border-radius:9px;background:rgba(13,122,111,.08);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+    .hc-item strong{font-weight:600}
+    .hc-item span{color:var(--muted);font-weight:300}
+    .btn-enroll{width:100%;background:var(--teal);color:#fff;padding:.85rem;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;border:none;cursor:pointer;transition:background .2s;text-align:center;text-decoration:none;display:block;margin-bottom:.75rem}
+    .btn-enroll:hover{background:var(--navy)}
+    .hc-note{text-align:center;font-size:.78rem;color:var(--muted)}
+
+    /* SECTION COMMON */
+    .section-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:.8rem}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.4rem);line-height:1.2;color:var(--navy);margin-bottom:1rem}
+    .section-title em{font-style:italic;color:var(--teal)}
+    .body-text{font-size:.95rem;color:var(--muted);line-height:1.8;font-weight:300}
+
+    /* WHO IT'S FOR */
+    .for-section{padding:80px 6vw;background:var(--sand)}
+    .for-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.5rem}
+    .for-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:1.6rem;display:flex;align-items:flex-start;gap:1rem;transition:transform .2s,box-shadow .2s}
+    .for-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .for-icon{width:44px;height:44px;border-radius:12px;background:rgba(13,122,111,.08);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+    .for-text p{font-size:.875rem;color:var(--navy);font-weight:500;margin-bottom:.2rem}
+    .for-text span{font-size:.8rem;color:var(--muted);font-weight:300}
+
+    /* CURRICULUM — ROLE TABS */
+    .modules-section{padding:80px 6vw}
+    .modules-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+
+    /* Tab bar */
+    .role-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem;background:var(--sand);padding:.4rem;border-radius:14px;width:fit-content}
+    .role-tab{padding:.55rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;transition:background .2s,color .2s;white-space:nowrap}
+    .role-tab.active{background:var(--white);color:var(--navy);box-shadow:0 2px 8px rgba(11,31,58,.08)}
+
+    /* Role panel */
+    .role-panel{display:none}
+    .role-panel.active{display:block;animation:fadeUp .35s ease both}
+
+    /* Role hero card */
+    .role-hero{display:grid;grid-template-columns:1fr 1fr;gap:2rem;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:2rem;margin-bottom:1.5rem;align-items:center}
+    .rh-left{}
+    .role-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:rgba(13,122,111,.08);border:1px solid rgba(13,122,111,.15);border-radius:100px;padding:.3rem .8rem;margin-bottom:.9rem}
+    .role-name{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--navy);line-height:1.2;margin-bottom:.6rem}
+    .role-name em{font-style:italic;color:var(--teal)}
+    .role-desc{font-size:.875rem;color:var(--muted);font-weight:300;line-height:1.75;margin-bottom:1.2rem}
+    .role-meta{display:flex;flex-wrap:wrap;gap:.6rem}
+    .role-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--sand);border-radius:100px;padding:.3rem .8rem;font-size:.78rem;font-weight:500;color:var(--navy)}
+    .rh-right{display:flex;flex-direction:column;gap:.6rem}
+    .rh-stat{background:var(--sand);border-radius:12px;padding:.9rem 1.1rem;display:flex;align-items:center;gap:.8rem}
+    .rh-stat-icon{font-size:1.2rem}
+    .rh-stat-label{font-size:.75rem;color:var(--muted);font-weight:300;margin-bottom:.1rem}
+    .rh-stat-val{font-size:.9rem;font-weight:600;color:var(--navy)}
+
+    /* Module accordion (reused) */
+    .module-list{display:flex;flex-direction:column;gap:.85rem}
+    .module-item{background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:box-shadow .2s}
+    .module-item:hover{box-shadow:var(--shadow)}
+    .module-header{display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem;cursor:pointer;user-select:none}
+    .mod-num{width:32px;height:32px;border-radius:9px;background:var(--navy);color:#fff;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Serif Display',serif}
+    .mod-emoji{font-size:1.2rem;flex-shrink:0}
+    .mod-title{font-weight:600;font-size:.92rem;color:var(--navy);flex:1}
+    .mod-count{font-size:.75rem;color:var(--muted);background:var(--sand);padding:.2rem .65rem;border-radius:100px;flex-shrink:0}
+    .mod-chevron{font-size:.72rem;color:var(--muted);transition:transform .25s;flex-shrink:0}
+    .module-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+    .module-body.open{max-height:600px}
+    .mod-body-inner{padding:1.1rem 1.4rem;border-top:1px solid var(--border)}
+    .mod-topics{display:grid;grid-template-columns:1fr 1fr;gap:.45rem .75rem}
+    .mod-topic{display:flex;align-items:flex-start;gap:.5rem;font-size:.825rem;color:var(--muted);font-weight:300;line-height:1.5}
+    .mod-topic::before{content:'→';color:var(--teal);font-size:.72rem;margin-top:.15rem;flex-shrink:0}
+
+    @media(max-width:700px){
+      .role-hero{grid-template-columns:1fr}
+      .mod-topics{grid-template-columns:1fr}
+      .role-tabs{width:100%}
+      .role-tab{flex:1;text-align:center}
+    }
+
+    /* OUTCOMES */
+    .outcomes-section{padding:80px 6vw;background:var(--sand)}
+    .outcomes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.5rem}
+    .outcome-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:1.6rem;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+    .outcome-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--teal-lt))}
+    .outcome-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .oc-icon{font-size:1.8rem;margin-bottom:.75rem}
+    .oc-title{font-weight:600;font-size:.9rem;color:var(--navy);margin-bottom:.4rem}
+    .oc-desc{font-size:.825rem;color:var(--muted);font-weight:300;line-height:1.6}
+
+    /* DURATION & CERT */
+    .tracks-section{padding:80px 6vw}
+    .tracks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.5rem}
+    .track-card{border-radius:20px;padding:2rem;border:1.5px solid var(--border);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+    .track-card.featured{background:var(--navy);border-color:var(--navy);color:#fff}
+    .track-card:not(.featured){background:var(--white)}
+    .track-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .track-badge{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:100px;margin-bottom:1rem}
+    .track-card.featured .track-badge{background:rgba(18,168,153,.2);color:var(--teal-lt)}
+    .track-card:not(.featured) .track-badge{background:rgba(13,122,111,.08);color:var(--teal)}
+    .track-name{font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:.3rem}
+    .track-card.featured .track-name{color:#fff}
+    .track-duration{font-size:2rem;font-family:'DM Serif Display',serif;margin:.75rem 0 .25rem}
+    .track-card.featured .track-duration{color:var(--teal-lt)}
+    .track-card:not(.featured) .track-duration{color:var(--teal)}
+    .track-weeks{font-size:.8rem;color:var(--muted);margin-bottom:1.2rem}
+    .track-card.featured .track-weeks{color:rgba(255,255,255,.5)}
+    .track-features{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+    .track-features li{font-size:.85rem;display:flex;align-items:center;gap:.5rem;font-weight:300}
+    .track-card:not(.featured) .track-features li{color:var(--muted)}
+    .track-card.featured .track-features li{color:rgba(255,255,255,.75)}
+    .track-features li::before{content:'✓';font-weight:700;color:var(--teal-lt);font-size:.8rem}
+    .track-card:not(.featured) .track-features li::before{color:var(--teal)}
+
+    /* CERT STRIP */
+    .cert-strip{background:linear-gradient(135deg,var(--navy) 0%,#163B6A 100%);padding:70px 6vw;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .cert-left h2{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.4rem);color:#fff;line-height:1.2;margin-bottom:1rem}
+    .cert-left h2 em{font-style:italic;color:var(--teal-lt)}
+    .cert-left p{font-size:.95rem;color:rgba(255,255,255,.6);font-weight:300;line-height:1.8}
+    .cert-cards{display:flex;flex-direction:column;gap:1rem}
+    .cert-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:1.1rem 1.4rem;display:flex;align-items:center;gap:1rem}
+    .cert-icon{font-size:1.5rem}
+    .cert-name{font-weight:600;font-size:.9rem;color:#fff;margin-bottom:.2rem}
+    .cert-desc{font-size:.8rem;color:rgba(255,255,255,.5);font-weight:300}
+
+    /* FEATURES */
+    .features-section{padding:80px 6vw;background:var(--sand)}
+    .features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:2.5rem}
+    .feat-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:1.6rem;text-align:center;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+    .feat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--teal-lt));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+    .feat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .feat-card:hover::after{transform:scaleX(1)}
+    .feat-icon{font-size:2rem;margin-bottom:.75rem}
+    .feat-title{font-weight:600;font-size:.9rem;color:var(--navy);margin-bottom:.4rem}
+    .feat-desc{font-size:.825rem;color:var(--muted);font-weight:300;line-height:1.6}
+
+    /* TOOLS */
+    .tools-section{padding:80px 6vw}
+    .tools-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:2.5rem}
+    .tool-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:1.6rem;text-align:center;transition:transform .2s,box-shadow .2s}
+    .tool-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .tool-icon{font-size:2.2rem;margin-bottom:.75rem}
+    .tool-name{font-weight:600;font-size:.9rem;color:var(--navy);margin-bottom:.25rem}
+    .tool-note{font-size:.78rem;color:var(--muted);font-weight:300}
+
+    /* CTA */
+    .cta-section{padding:90px 6vw;text-align:center;background:var(--cream);position:relative;overflow:hidden}
+    .cta-section::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(13,122,111,.07),transparent 70%);pointer-events:none}
+    .cta-inner{position:relative;z-index:1;max-width:580px;margin:0 auto}
+    .cta-inner h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,2.8rem);line-height:1.15;margin-bottom:1rem}
+    .cta-inner h2 em{font-style:italic;color:var(--teal)}
+    .cta-inner p{font-size:1rem;color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:2rem}
+    .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+    /* STATS STRIP */
+    .stats-strip{padding:60px 6vw;background:var(--navy);display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+    .strip-val{font-family:'DM Serif Display',serif;font-size:2.4rem;color:#fff;margin-bottom:.3rem}
+    .strip-label{font-size:.82rem;color:rgba(255,255,255,.5)}
+
+    /* FOOTER */
+    footer{background:var(--navy);color:rgba(255,255,255,.5);padding:3.5rem 6vw 2rem}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08)}
+    .footer-brand .logo{color:#fff;margin-bottom:.8rem;display:block}
+    .footer-brand p{font-size:.85rem;line-height:1.7;max-width:240px}
+    .footer-col h4{color:rgba(255,255,255,.85);font-size:.85rem;font-weight:600;margin-bottom:1rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+    .footer-col ul a{text-decoration:none;color:rgba(255,255,255,.45);font-size:.85rem;transition:color .2s}
+    .footer-col ul a:hover{color:var(--teal-lt)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.8rem;font-size:.8rem;flex-wrap:wrap;gap:1rem}
+    .footer-bottom a{color:rgba(255,255,255,.4);text-decoration:none}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+    @media(max-width:1000px){
+      .hero-inner{grid-template-columns:1fr}
+      .hero-card{display:none}
+      .for-grid{grid-template-columns:1fr 1fr}
+      .tracks-grid{grid-template-columns:1fr}
+      .cert-strip{grid-template-columns:1fr}
+      .features-grid{grid-template-columns:1fr 1fr}
+      .tools-grid{grid-template-columns:1fr 1fr}
+      .outcomes-grid{grid-template-columns:1fr 1fr}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:600px){
+      .nav-links{display:none}
+      .for-grid,.features-grid,.tools-grid,.outcomes-grid,.mod-topics{grid-template-columns:1fr}
+      .stats-strip{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html"><span class="logo-dot"></span> TrialPath</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="course.html" class="active">CDM Course</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="btn-nav">Enroll Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="course-hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="page-tag">📘 Clinical Data Management</div>
+      <h1>The complete CDM<br>training program to<br><em>launch your career</em></h1>
+      <p>A comprehensive, industry-aligned program covering everything from clinical trial fundamentals to advanced data management practices — with real hands-on EDC training built in.</p>
+      <div class="hero-badges">
+        <span class="badge"><span class="badge-dot"></span> 5 Role Tracks</span>
+        <span class="badge"><span class="badge-dot"></span> Live + Recorded</span>
+        <span class="badge"><span class="badge-dot"></span> Hands-on EDC Practice</span>
+        <span class="badge"><span class="badge-dot"></span> Certificate Included</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="contact.html" class="btn-primary">Enroll Now →</a>
+        <a href="contact.html" class="btn-secondary">Request a Demo</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-header">
+        <div class="hc-emoji">🧬</div>
+        <div class="hc-title">CDM Training Program</div>
+        <div class="hc-sub">Industry-aligned · Job-ready</div>
+      </div>
+      <div class="hc-items">
+        <div class="hc-item"><div class="ic">⏳</div><div><strong>Duration</strong><br><span>4–8 weeks (track-based)</span></div></div>
+        <div class="hc-item"><div class="ic">🌐</div><div><strong>Delivery</strong><br><span>Online — Live + Self-paced</span></div></div>
+        <div class="hc-item"><div class="ic">🛠️</div><div><strong>Tools</strong><br><span>Medidata Rave, Oracle Inform, Veeva</span></div></div>
+        <div class="hc-item"><div class="ic">🎓</div><div><strong>Certification</strong><br><span>3 certificates upon completion</span></div></div>
+        <div class="hc-item"><div class="ic">🏢</div><div><strong>Format</strong><br><span>Corporate training available</span></div></div>
+      </div>
+      <a href="contact.html" class="btn-enroll">Enroll Now</a>
+      <div class="hc-note">💬 Questions? <a href="contact.html" style="color:var(--teal);text-decoration:none;font-weight:500">Contact us for a free demo</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div><div class="strip-val">12,000+</div><div class="strip-label">Learners Enrolled</div></div>
+  <div><div class="strip-val">5</div><div class="strip-label">Role-Based Tracks</div></div>
+  <div><div class="strip-val">40+</div><div class="strip-label">Expert Instructors</div></div>
+  <div><div class="strip-val">3</div><div class="strip-label">Certificates Awarded</div></div>
+</div>
+
+<!-- WHO IT'S FOR -->
+<section class="for-section">
+  <p class="section-label">Who This Course Is For</p>
+  <h2 class="section-title">Built for every stage of your <em>journey</em></h2>
+  <div class="for-grid">
+    <div class="for-card">
+      <div class="for-icon">🎓</div>
+      <div class="for-text"><p>Life Science Graduates</p><span>B.Pharm, M.Pharm, BSc, MSc, Biotech and related fields</span></div>
+    </div>
+    <div class="for-card">
+      <div class="for-icon">🔰</div>
+      <div class="for-text"><p>Freshers & Career Changers</p><span>Looking to enter the clinical research industry for the first time</span></div>
+    </div>
+    <div class="for-card">
+      <div class="for-icon">🏥</div>
+      <div class="for-text"><p>Clinical Research Professionals</p><span>CDAs, CRCs, and CRAs ready to expand their skill set</span></div>
+    </div>
+    <div class="for-card">
+      <div class="for-icon">📈</div>
+      <div class="for-text"><p>Experienced CDM Professionals</p><span>Upskilling with advanced modules and CDISC standards</span></div>
+    </div>
+    <div class="for-card">
+      <div class="for-icon">💻</div>
+      <div class="for-text"><p>SAS / SDTM Professionals</p><span>Transitioning into Clinical Data Management roles</span></div>
+    </div>
+    <div class="for-card">
+      <div class="for-icon">🏢</div>
+      <div class="for-text"><p>Corporate Teams</p><span>CROs and pharma companies upskilling their CDM staff</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="modules-section">
+  <div class="modules-header">
+    <div>
+      <p class="section-label">Course Curriculum</p>
+      <h2 class="section-title">Role-based training.<br><em>Built for your career path.</em></h2>
+    </div>
+    <p style="font-size:.85rem;color:var(--muted);font-weight:300;max-width:260px;text-align:right">Select a role below to explore its dedicated curriculum.</p>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="role-tabs">
+    <button class="role-tab active" onclick="switchRole('cdm', this)">📊 Clinical Data Manager</button>
+    <button class="role-tab" onclick="switchRole('cra', this)">🔍 Clinical Research Associate</button>
+    <button class="role-tab" onclick="switchRole('sas', this)">💻 Clinical SAS Programmer</button>
+    <button class="role-tab" onclick="switchRole('ra', this)">📋 Regulatory Affairs</button>
+    <button class="role-tab" onclick="switchRole('pm', this)">🗂️ Clinical Project Manager</button>
+  </div>
+
+  <!-- CDM PANEL -->
+  <div class="role-panel active" id="panel-cdm">
+    <div class="role-hero">
+      <div class="rh-left">
+        <div class="role-tag">📊 Role Track</div>
+        <div class="role-name">Clinical Data <em>Manager</em></div>
+        <div class="role-desc">Master the end-to-end data management lifecycle — from CRF design and EDC setup through data cleaning, CDISC standards, and database lock. The most in-demand role in clinical operations.</div>
+        <div class="role-meta">
+          <span class="role-chip">⏳ 6–8 weeks</span>
+          <span class="role-chip">📚 8 modules</span>
+          <span class="role-chip">🎓 Certificate included</span>
+          <span class="role-chip">🔰 Beginner–Advanced</span>
+        </div>
+      </div>
+      <div class="rh-right">
+        <div class="rh-stat"><div class="rh-stat-icon">💼</div><div><div class="rh-stat-label">Avg. Entry Salary (US)</div><div class="rh-stat-val">$65,000 – $85,000 / yr</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">🏢</div><div><div class="rh-stat-label">Top Employers</div><div class="rh-stat-val">CROs, Biotech & Pharma</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">📈</div><div><div class="rh-stat-label">Career Path</div><div class="rh-stat-val">CDA → DM → Lead DM → Manager</div></div></div>
+      </div>
+    </div>
+    <div class="module-list">
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">01</div><div class="mod-emoji">🔰</div><div class="mod-title">Introduction to Clinical Research & CDM</div><div class="mod-count">6 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Clinical Trial phases I–IV overview</div><div class="mod-topic">Role of CDM in drug development</div><div class="mod-topic">Key stakeholders & cross-functional teams</div><div class="mod-topic">ICH-GCP guidelines</div><div class="mod-topic">FDA & EMA regulatory basics</div><div class="mod-topic">21 CFR Part 11 & data integrity</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">02</div><div class="mod-emoji">📋</div><div class="mod-title">CRF Design & Data Collection</div><div class="mod-count">6 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Paper vs eCRF design principles</div><div class="mod-topic">CDASH-aligned form design</div><div class="mod-topic">Annotated CRF creation</div><div class="mod-topic">Data collection methods</div><div class="mod-topic">Protocol-to-CRF mapping</div><div class="mod-topic">CRF completion guidelines</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">03</div><div class="mod-emoji">💻</div><div class="mod-title">EDC Systems — Hands-On</div><div class="mod-count">7 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Medidata Rave — study build & forms</div><div class="mod-topic">Oracle Inform — hands-on practice</div><div class="mod-topic">Veeva Vault CDMS overview</div><div class="mod-topic">Edit check programming basics</div><div class="mod-topic">UAT planning & execution</div><div class="mod-topic">User roles & access management</div><div class="mod-topic">Go-live activities</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">04</div><div class="mod-emoji">🧹</div><div class="mod-title">Data Cleaning & Query Management</div><div class="mod-count">7 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Types of discrepancies</div><div class="mod-topic">Manual & system-generated queries</div><div class="mod-topic">Query lifecycle management</div><div class="mod-topic">Medical coding: MedDRA</div><div class="mod-topic">Medical coding: WHO Drug</div><div class="mod-topic">SAE reconciliation</div><div class="mod-topic">External data reconciliation</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">05</div><div class="mod-emoji">📐</div><div class="mod-title">CDISC Standards</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Introduction to CDISC</div><div class="mod-topic">CDASH — data collection standards</div><div class="mod-topic">SDTM — data tabulation models</div><div class="mod-topic">ADaM basics</div><div class="mod-topic">Regulatory submission readiness</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">06</div><div class="mod-emoji">🚀</div><div class="mod-title">Advanced CDM & Risk-Based Management</div><div class="mod-count">6 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Database design best practices</div><div class="mod-topic">Complex edit check logic</div><div class="mod-topic">Risk-Based Data Management (RBDM)</div><div class="mod-topic">Data review listings & metrics</div><div class="mod-topic">KPIs in CDM</div><div class="mod-topic">Audit readiness & inspections</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">07</div><div class="mod-emoji">🔄</div><div class="mod-title">Study Start-Up to Database Lock</div><div class="mod-count">6 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Protocol review & DMP creation</div><div class="mod-topic">Database build & UAT</div><div class="mod-topic">Interim data reviews</div><div class="mod-topic">Database Lock (DBL) process</div><div class="mod-topic">Archival & TMF</div><div class="mod-topic">Close-out activities</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">08</div><div class="mod-emoji">📈</div><div class="mod-title">Career Prep & Interview Readiness</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Resume building for CDM roles</div><div class="mod-topic">Common CDM interview questions</div><div class="mod-topic">Scenario-based interview prep</div><div class="mod-topic">Career path planning</div><div class="mod-topic">Networking & job search strategies</div></div></div></div></div>
+    </div>
+  </div>
+
+  <!-- CRA PANEL -->
+  <div class="role-panel" id="panel-cra">
+    <div class="role-hero">
+      <div class="rh-left">
+        <div class="role-tag">🔍 Role Track</div>
+        <div class="role-name">Clinical Research <em>Associate</em></div>
+        <div class="role-desc">Learn site monitoring, regulatory compliance, and Good Clinical Practice. CRAs are the backbone of trial oversight — ensuring data quality at every investigative site.</div>
+        <div class="role-meta">
+          <span class="role-chip">⏳ 5–7 weeks</span>
+          <span class="role-chip">📚 7 modules</span>
+          <span class="role-chip">🎓 Certificate included</span>
+          <span class="role-chip">🔰 Beginner–Mid</span>
+        </div>
+      </div>
+      <div class="rh-right">
+        <div class="rh-stat"><div class="rh-stat-icon">💼</div><div><div class="rh-stat-label">Avg. Entry Salary (US)</div><div class="rh-stat-val">$60,000 – $80,000 / yr</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">🏢</div><div><div class="rh-stat-label">Top Employers</div><div class="rh-stat-val">CROs, Sponsors, Academic sites</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">📈</div><div><div class="rh-stat-label">Career Path</div><div class="rh-stat-val">CRC → CRA → Sr. CRA → CTM</div></div></div>
+      </div>
+    </div>
+    <div class="module-list">
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">01</div><div class="mod-emoji">🔰</div><div class="mod-title">Clinical Trial Fundamentals</div><div class="mod-count">6 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Drug development & trial phases</div><div class="mod-topic">Role of a CRA in trial oversight</div><div class="mod-topic">Sponsor, CRO, & site relationships</div><div class="mod-topic">ICH-GCP E6(R2) guidelines</div><div class="mod-topic">FDA 21 CFR Parts 312 & 11</div><div class="mod-topic">Informed consent processes</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">02</div><div class="mod-emoji">🏥</div><div class="mod-title">Site Selection & Initiation</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Feasibility & site qualification visits</div><div class="mod-topic">Site initiation visit (SIV) preparation</div><div class="mod-topic">IRB/IEC submissions</div><div class="mod-topic">Essential documents checklist</div><div class="mod-topic">Investigator file setup</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">03</div><div class="mod-emoji">🔍</div><div class="mod-title">On-Site & Remote Monitoring</div><div class="mod-count">7 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Source data verification (SDV)</div><div class="mod-topic">Source data review (SDR)</div><div class="mod-topic">Risk-based monitoring (RBM)</div><div class="mod-topic">Remote monitoring tools & platforms</div><div class="mod-topic">Monitoring visit reports</div><div class="mod-topic">Protocol deviation identification</div><div class="mod-topic">CAPA follow-up & escalation</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">04</div><div class="mod-emoji">📋</div><div class="mod-title">Regulatory Documents & TMF</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Trial Master File (TMF) management</div><div class="mod-topic">ICH E6 essential documents</div><div class="mod-topic">eTMF systems overview</div><div class="mod-topic">Inspection readiness</div><div class="mod-topic">Document control & version management</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">05</div><div class="mod-emoji">💊</div><div class="mod-title">Investigational Product & Safety</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">IP accountability & reconciliation</div><div class="mod-topic">AE & SAE reporting requirements</div><div class="mod-topic">Expedited safety reporting</div><div class="mod-topic">Unblinding procedures</div><div class="mod-topic">Drug storage & handling</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">06</div><div class="mod-emoji">🔄</div><div class="mod-title">Site Close-Out & Audit Prep</div><div class="mod-count">4 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Close-out visit procedures</div><div class="mod-topic">Regulatory authority inspections</div><div class="mod-topic">Audit findings & response</div><div class="mod-topic">Final site reconciliation</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">07</div><div class="mod-emoji">📈</div><div class="mod-title">CRA Career Prep & Mock Visits</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Resume & LinkedIn for CRA roles</div><div class="mod-topic">Mock monitoring visit simulation</div><div class="mod-topic">CRA interview scenarios</div><div class="mod-topic">Therapeutic area overview</div><div class="mod-topic">Transitioning from CRC to CRA</div></div></div></div></div>
+    </div>
+  </div>
+
+  <!-- SAS PANEL -->
+  <div class="role-panel" id="panel-sas">
+    <div class="role-hero">
+      <div class="rh-left">
+        <div class="role-tag">💻 Role Track</div>
+        <div class="role-name">Clinical SAS <em>Programmer</em></div>
+        <div class="role-desc">Build expertise in CDISC standards, SAS programming, and regulatory submission datasets. A highly technical, well-compensated role at the intersection of data science and clinical research.</div>
+        <div class="role-meta">
+          <span class="role-chip">⏳ 8–10 weeks</span>
+          <span class="role-chip">📚 8 modules</span>
+          <span class="role-chip">🎓 Certificate included</span>
+          <span class="role-chip">⚠️ Some SAS knowledge helpful</span>
+        </div>
+      </div>
+      <div class="rh-right">
+        <div class="rh-stat"><div class="rh-stat-icon">💼</div><div><div class="rh-stat-label">Avg. Entry Salary (US)</div><div class="rh-stat-val">$75,000 – $100,000 / yr</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">🏢</div><div><div class="rh-stat-label">Top Employers</div><div class="rh-stat-val">CROs, Pharma, Biotech</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">📈</div><div><div class="rh-stat-label">Career Path</div><div class="rh-stat-val">Programmer → Sr. Programmer → Lead</div></div></div>
+      </div>
+    </div>
+    <div class="module-list">
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">01</div><div class="mod-emoji">🔰</div><div class="mod-title">Clinical Research & Biostats Basics</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Role of a SAS programmer in trials</div><div class="mod-topic">Clinical trial phases overview</div><div class="mod-topic">Relationship with biostatistics</div><div class="mod-topic">Regulatory submissions overview</div><div class="mod-topic">NDA / BLA / IND basics</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">02</div><div class="mod-emoji">💻</div><div class="mod-title">SAS Programming for Clinical Trials</div><div class="mod-count">7 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">SAS Base — data steps & procedures</div><div class="mod-topic">PROC SQL for clinical data</div><div class="mod-topic">SAS Macros & automation</div><div class="mod-topic">Formats, informats & date handling</div><div class="mod-topic">Merging & reshaping datasets</div><div class="mod-topic">ODS & output delivery</div><div class="mod-topic">SAS validation techniques</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">03</div><div class="mod-emoji">📐</div><div class="mod-title">CDISC Standards — SDTM & ADaM</div><div class="mod-count">8 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">CDISC ecosystem overview</div><div class="mod-topic">CDASH data collection standards</div><div class="mod-topic">SDTM mapping & domain creation</div><div class="mod-topic">SDTM IG — DM, AE, LB, VS domains</div><div class="mod-topic">ADaM structure & principles</div><div class="mod-topic">ADSL, ADAE, ADLB creation</div><div class="mod-topic">Define.xml & Reviewer's Guide</div><div class="mod-topic">FDA/PMDA submission standards</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">04</div><div class="mod-emoji">📊</div><div class="mod-title">Tables, Listings & Figures (TLFs)</div><div class="mod-count">6 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Statistical Analysis Plan (SAP) review</div><div class="mod-topic">Summary tables programming</div><div class="mod-topic">Patient-level listings</div><div class="mod-topic">Efficacy & safety figures</div><div class="mod-topic">RTF / PDF output formatting</div><div class="mod-topic">TLF validation & QC</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">05</div><div class="mod-emoji">✅</div><div class="mod-title">Validation & Quality Control</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Double programming methodology</div><div class="mod-topic">PROC COMPARE for validation</div><div class="mod-topic">Pinnacle 21 validation tool</div><div class="mod-topic">Audit trail & 21 CFR Part 11</div><div class="mod-topic">QC checklists & documentation</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">06</div><div class="mod-emoji">📁</div><div class="mod-title">Regulatory Submission Packages</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">eCTD structure overview</div><div class="mod-topic">Submitting SDTM & ADaM to FDA</div><div class="mod-topic">Study Data Reviewer's Guide (SDRG)</div><div class="mod-topic">CDISC compliance checklist</div><div class="mod-topic">Common FDA rejection reasons</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">07</div><div class="mod-emoji">🧪</div><div class="mod-title">Hands-On Project Work</div><div class="mod-count">4 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">End-to-end SDTM mapping exercise</div><div class="mod-topic">ADaM dataset creation project</div><div class="mod-topic">TLF programming from SAP</div><div class="mod-topic">Pinnacle 21 compliance run</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">08</div><div class="mod-emoji">📈</div><div class="mod-title">Career Prep for SAS Programmers</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Resume & portfolio for SAS roles</div><div class="mod-topic">Technical interview preparation</div><div class="mod-topic">Common coding test questions</div><div class="mod-topic">Freelance vs full-time options</div><div class="mod-topic">R & Python for future-proofing</div></div></div></div></div>
+    </div>
+  </div>
+
+  <!-- RA PANEL -->
+  <div class="role-panel" id="panel-ra">
+    <div class="role-hero">
+      <div class="rh-left">
+        <div class="role-tag">📋 Role Track</div>
+        <div class="role-name">Regulatory <em>Affairs Specialist</em></div>
+        <div class="role-desc">Navigate the complex world of drug approvals, regulatory submissions, and agency interactions. RA professionals ensure that products meet all legal and safety requirements before reaching patients.</div>
+        <div class="role-meta">
+          <span class="role-chip">⏳ 6–8 weeks</span>
+          <span class="role-chip">📚 7 modules</span>
+          <span class="role-chip">🎓 Certificate included</span>
+          <span class="role-chip">🔰 Beginner–Mid</span>
+        </div>
+      </div>
+      <div class="rh-right">
+        <div class="rh-stat"><div class="rh-stat-icon">💼</div><div><div class="rh-stat-label">Avg. Entry Salary (US)</div><div class="rh-stat-val">$65,000 – $90,000 / yr</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">🏢</div><div><div class="rh-stat-label">Top Employers</div><div class="rh-stat-val">Pharma, Biotech, Devices, CROs</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">📈</div><div><div class="rh-stat-label">Career Path</div><div class="rh-stat-val">RA Associate → Specialist → Manager</div></div></div>
+      </div>
+    </div>
+    <div class="module-list">
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">01</div><div class="mod-emoji">🔰</div><div class="mod-title">Introduction to Regulatory Affairs</div><div class="mod-count">6 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Role of RA in drug development</div><div class="mod-topic">Global regulatory landscape</div><div class="mod-topic">FDA, EMA, ICH overview</div><div class="mod-topic">Drug vs device vs combination products</div><div class="mod-topic">Regulatory pathways (NDA, BLA, 510k)</div><div class="mod-topic">Key RA terminology</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">02</div><div class="mod-emoji">📁</div><div class="mod-title">IND & Clinical Development</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">IND application components</div><div class="mod-topic">Protocol submission & amendments</div><div class="mod-topic">FDA correspondence & meetings</div><div class="mod-topic">Clinical hold procedures</div><div class="mod-topic">Annual IND reports</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">03</div><div class="mod-emoji">📊</div><div class="mod-title">NDA / BLA & Marketing Approval</div><div class="mod-count">6 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">NDA vs BLA — when & how</div><div class="mod-topic">eCTD structure & submission</div><div class="mod-topic">Common Technical Document (CTD)</div><div class="mod-topic">Labeling requirements</div><div class="mod-topic">FDA review process & PDUFA dates</div><div class="mod-topic">Complete Response Letters (CRL)</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">04</div><div class="mod-emoji">🌍</div><div class="mod-title">Global Regulatory Strategy</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">EMA & CHMP processes</div><div class="mod-topic">ICH harmonization guidelines</div><div class="mod-topic">Emerging markets (PMDA, Health Canada)</div><div class="mod-topic">Parallel submissions strategy</div><div class="mod-topic">Regional labeling differences</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">05</div><div class="mod-emoji">⚠️</div><div class="mod-title">Pharmacovigilance & Post-Market</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Post-market surveillance obligations</div><div class="mod-topic">REMS programs</div><div class="mod-topic">Periodic Safety Update Reports (PSUR)</div><div class="mod-topic">Adverse event reporting to FDA</div><div class="mod-topic">Product recalls & field alerts</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">06</div><div class="mod-emoji">✅</div><div class="mod-title">CMC & Labeling</div><div class="mod-count">4 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Chemistry, Manufacturing & Controls (CMC)</div><div class="mod-topic">Prescribing information (PI) writing</div><div class="mod-topic">Promotional material review</div><div class="mod-topic">Supplement & variation filings</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">07</div><div class="mod-emoji">📈</div><div class="mod-title">RA Career Prep & Interview Readiness</div><div class="mod-count">4 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Resume building for RA roles</div><div class="mod-topic">RA interview Q&A practice</div><div class="mod-topic">RAC certification overview</div><div class="mod-topic">Transitioning from clinical to RA</div></div></div></div></div>
+    </div>
+  </div>
+
+  <!-- PM PANEL -->
+  <div class="role-panel" id="panel-pm">
+    <div class="role-hero">
+      <div class="rh-left">
+        <div class="role-tag">🗂️ Role Track</div>
+        <div class="role-name">Clinical Project <em>Manager</em></div>
+        <div class="role-desc">Lead cross-functional clinical trial teams from study startup through close-out. CPMs oversee timelines, budgets, vendor management, and regulatory milestones across global programs.</div>
+        <div class="role-meta">
+          <span class="role-chip">⏳ 6–8 weeks</span>
+          <span class="role-chip">📚 7 modules</span>
+          <span class="role-chip">🎓 Certificate included</span>
+          <span class="role-chip">⚠️ Some CRA/CRC experience helpful</span>
+        </div>
+      </div>
+      <div class="rh-right">
+        <div class="rh-stat"><div class="rh-stat-icon">💼</div><div><div class="rh-stat-label">Avg. Salary (US)</div><div class="rh-stat-val">$90,000 – $130,000 / yr</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">🏢</div><div><div class="rh-stat-label">Top Employers</div><div class="rh-stat-val">CROs, Pharma, Biotech sponsors</div></div></div>
+        <div class="rh-stat"><div class="rh-stat-icon">📈</div><div><div class="rh-stat-label">Career Path</div><div class="rh-stat-val">CRA → PM → Sr. PM → Director</div></div></div>
+      </div>
+    </div>
+    <div class="module-list">
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">01</div><div class="mod-emoji">🔰</div><div class="mod-title">Clinical Project Management Foundations</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Role of CPM in trial operations</div><div class="mod-topic">Study lifecycle & key milestones</div><div class="mod-topic">Sponsor vs CRO governance models</div><div class="mod-topic">Regulatory touchpoints for PMs</div><div class="mod-topic">ICH-GCP obligations for management</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">02</div><div class="mod-emoji">📅</div><div class="mod-title">Study Planning & Start-Up</div><div class="mod-count">6 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Protocol development & feasibility</div><div class="mod-topic">Integrated Study Plan (ISP)</div><div class="mod-topic">Site selection strategy</div><div class="mod-topic">Country & site activation timelines</div><div class="mod-topic">IRB/IEC & regulatory submissions</div><div class="mod-topic">Vendor selection & SOW</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">03</div><div class="mod-emoji">👥</div><div class="mod-title">Team & Vendor Management</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Cross-functional team leadership</div><div class="mod-topic">CRO oversight & governance</div><div class="mod-topic">Vendor oversight plans</div><div class="mod-topic">Escalation & issue resolution</div><div class="mod-topic">Communication plans & status reporting</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">04</div><div class="mod-emoji">💰</div><div class="mod-title">Budget & Risk Management</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Study budget development & tracking</div><div class="mod-topic">Change order management</div><div class="mod-topic">Risk register & RAID log</div><div class="mod-topic">Risk-based monitoring integration</div><div class="mod-topic">Financial forecasting & EAC</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">05</div><div class="mod-emoji">📊</div><div class="mod-title">Enrollment, Data & Safety Oversight</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Enrollment tracking & forecasting</div><div class="mod-topic">DSMB & safety committee interactions</div><div class="mod-topic">Interim analysis planning</div><div class="mod-topic">KPIs & dashboards for trial performance</div><div class="mod-topic">Protocol deviation management</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">06</div><div class="mod-emoji">🔄</div><div class="mod-title">Close-Out, Inspection & Archival</div><div class="mod-count">4 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Study close-out checklist</div><div class="mod-topic">Regulatory authority inspection readiness</div><div class="mod-topic">TMF finalization & archival</div><div class="mod-topic">Lessons learned & process improvement</div></div></div></div></div>
+      <div class="module-item"><div class="module-header" onclick="toggleMod(this)"><div class="mod-num">07</div><div class="mod-emoji">📈</div><div class="mod-title">CPM Career Prep & Leadership Skills</div><div class="mod-count">5 topics</div><div class="mod-chevron">▼</div></div><div class="module-body"><div class="mod-body-inner"><div class="mod-topics"><div class="mod-topic">Resume building for PM roles</div><div class="mod-topic">Behavioral interview prep (STAR method)</div><div class="mod-topic">PMP & CAPM certification overview</div><div class="mod-topic">Negotiation & stakeholder management</div><div class="mod-topic">Transitioning from CRA/CRC to PM</div></div></div></div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- OUTCOMES -->
+<section class="outcomes-section">
+  <p class="section-label">Learning Outcomes</p>
+  <h2 class="section-title">What you'll be able to do<br>by the <em>end of this course</em></h2>
+  <div class="outcomes-grid">
+    <div class="outcome-card">
+      <div class="oc-icon">🔄</div>
+      <div class="oc-title">End-to-End CDM Processes</div>
+      <div class="oc-desc">Understand the full data management lifecycle from protocol review through database lock and archival.</div>
+    </div>
+    <div class="outcome-card">
+      <div class="oc-icon">💻</div>
+      <div class="oc-title">EDC System Proficiency</div>
+      <div class="oc-desc">Gain practical, hands-on exposure to industry-standard EDC platforms including Medidata Rave and Oracle Inform.</div>
+    </div>
+    <div class="outcome-card">
+      <div class="oc-icon">🧹</div>
+      <div class="oc-title">Data Cleaning & Validation</div>
+      <div class="oc-desc">Perform query management, discrepancy resolution, and data validation with real-world exercises.</div>
+    </div>
+    <div class="outcome-card">
+      <div class="oc-icon">📐</div>
+      <div class="oc-title">CDISC Standards Application</div>
+      <div class="oc-desc">Apply CDASH and SDTM standards to real scenarios, ensuring regulatory-compliant data submissions.</div>
+    </div>
+    <div class="outcome-card">
+      <div class="oc-icon">💼</div>
+      <div class="oc-title">Job-Ready Skills</div>
+      <div class="oc-desc">Be fully prepared to interview and succeed in entry-level and mid-level CDM roles at CROs and pharma companies.</div>
+    </div>
+    <div class="outcome-card">
+      <div class="oc-icon">🏆</div>
+      <div class="oc-title">Industry Certification</div>
+      <div class="oc-desc">Earn 3 certificates — course completion, hands-on project, and mock interview feedback — to validate your expertise.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKS -->
+<section class="tracks-section">
+  <p class="section-label">Course Duration Options</p>
+  <h2 class="section-title">Choose the track that fits<br>your <em>schedule & goals</em></h2>
+  <div class="tracks-grid">
+    <div class="track-card">
+      <div class="track-badge">Beginner</div>
+      <div class="track-name">Beginner Track</div>
+      <div class="track-duration">4–6</div>
+      <div class="track-weeks">weeks</div>
+      <ul class="track-features">
+        <li>Modules 1–5 covered</li>
+        <li>CDM fundamentals & EDC basics</li>
+        <li>CDISC introduction</li>
+        <li>Career prep included</li>
+      </ul>
+    </div>
+    <div class="track-card featured">
+      <div class="track-badge">Most Popular</div>
+      <div class="track-name">Fast-Track (Combined)</div>
+      <div class="track-duration">6–8</div>
+      <div class="track-weeks">weeks</div>
+      <ul class="track-features">
+        <li>All 10 modules</li>
+        <li>Full EDC hands-on practice</li>
+        <li>Advanced CDM & CDISC</li>
+        <li>Real-world scenarios</li>
+        <li>3 certificates awarded</li>
+      </ul>
+    </div>
+    <div class="track-card">
+      <div class="track-badge">Advanced</div>
+      <div class="track-name">Advanced Track</div>
+      <div class="track-duration">3–4</div>
+      <div class="track-weeks">weeks</div>
+      <ul class="track-features">
+        <li>Modules 6–10 covered</li>
+        <li>RBDM & audit readiness</li>
+        <li>Advanced CDISC</li>
+        <li>Leadership & KPI focus</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CERT STRIP -->
+<div class="cert-strip">
+  <div class="cert-left">
+    <h2>Earn <em>3 certificates</em> to prove your expertise</h2>
+    <p>Every learner who completes the program walks away with tangible proof of their skills — recognized by CROs and pharma hiring teams across the US.</p>
+  </div>
+  <div class="cert-cards">
+    <div class="cert-card">
+      <div class="cert-icon">🎓</div>
+      <div><div class="cert-name">Course Completion Certificate</div><div class="cert-desc">Awarded upon finishing all modules</div></div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🧪</div>
+      <div><div class="cert-name">Hands-On Project Certificate</div><div class="cert-desc">For completing the practical training exercises</div></div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">📋</div>
+      <div><div class="cert-name">Mock Interview Feedback Report</div><div class="cert-desc">Personalized feedback from a CDM professional</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features-section">
+  <p class="section-label">Training Features</p>
+  <h2 class="section-title">Everything you need to <em>succeed</em></h2>
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-icon">🎙️</div>
+      <div class="feat-title">Instructor-Led Sessions</div>
+      <div class="feat-desc">Live classes with experienced CDM professionals who answer questions in real time.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🎬</div>
+      <div class="feat-title">Recorded Video Library</div>
+      <div class="feat-desc">Lifetime access to all recorded sessions — revisit any topic at your own pace, anytime.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">📝</div>
+      <div class="feat-title">Real-Time Assignments</div>
+      <div class="feat-desc">Practice what you learn immediately with assignments graded by industry mentors.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🙋</div>
+      <div class="feat-title">Live Doubt Clearing</div>
+      <div class="feat-desc">Dedicated Q&A sessions so no question goes unanswered on your path to mastery.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section">
+  <p class="section-label">Tools You'll Learn</p>
+  <h2 class="section-title">Industry-standard tools,<br><em>hands-on practice</em></h2>
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-icon">⚡</div>
+      <div class="tool-name">Medidata Rave</div>
+      <div class="tool-note">Industry-leading EDC platform</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🔷</div>
+      <div class="tool-name">Oracle Inform</div>
+      <div class="tool-note">Widely used in global trials</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">☁️</div>
+      <div class="tool-name">Veeva Vault</div>
+      <div class="tool-note">Cloud-based clinical platform</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">📊</div>
+      <div class="tool-name">Excel (Advanced)</div>
+      <div class="tool-note">CDM-specific data operations</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="page-tag" style="margin-bottom:1.2rem">🚀 Start Today</div>
+    <h2>Start your career in<br><em>Clinical Data Management</em></h2>
+    <p>Enroll now to gain industry-relevant skills and hands-on experience. Or contact us to request a free demo session and customized training plan.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn-primary">Enroll Now →</a>
+      <a href="contact.html" class="btn-secondary">Request a Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="index.html"><span class="logo-dot"></span> TrialPath</a>
+      <p>Empowering clinical research professionals with world-class education since 2019.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Training</h4>
+      <ul><li><a href="course.html">CDM Course</a></li><li><a href="course.html#modules">Curriculum</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul><li><a href="index.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Refund Policy</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 TrialPath Inc. All rights reserved.</span>
+    <div style="display:flex;gap:1.5rem"><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </div>
+</footer>
+
+<script>
+  function switchRole(role, btn) {
+    // Deactivate all tabs & panels
+    document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.role-panel').forEach(p => p.classList.remove('active'));
+    // Activate selected
+    btn.classList.add('active');
+    document.getElementById('panel-' + role).classList.add('active');
+    // Close all open module bodies in the new panel
+    document.querySelectorAll('.module-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.mod-chevron').forEach(c => c.style.transform = '');
+  }
+
+  function toggleMod(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.mod-chevron');
+    const isOpen = body.classList.contains('open');
+    // Close all within this panel only
+    const panel = header.closest('.role-panel');
+    panel.querySelectorAll('.module-body').forEach(b => b.classList.remove('open'));
+    panel.querySelectorAll('.mod-chevron').forEach(c => c.style.transform = '');
+    panel.querySelectorAll('.module-item').forEach(i => i.style.boxShadow = '');
+    if (!isOpen) {
+      body.classList.add('open');
+      chevron.style.transform = 'rotate(180deg)';
+      header.closest('.module-item').style.boxShadow = '0 8px 40px rgba(11,31,58,.10)';
+    }
+  }
+
+  // Scroll-reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.for-card,.outcome-card,.track-card,.feat-card,.tool-card,.module-item,.cert-card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = `opacity .5s ${i * 0.05}s ease, transform .5s ${i * 0.05}s ease`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
