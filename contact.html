@@ -889,11 +889,10 @@
     <a class="logo" href="index.html"><span class="logo-dot"></span> TrialPath</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Us</a></li>
       <li><a href="course.html">CDM Course</a></li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="contact.html" class="active">Contact</a></li>
-      <li><a href="payment.html" class="btn-nav">Enroll Now</a></li>
+      <li><a href="contact.html" class="btn-nav">Enroll Now</a></li>
     </ul>
   </nav>
 
@@ -1142,7 +1141,7 @@
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
-          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html">About Us</a></li>
           <li><a href="blog.html">Blog</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -1159,7 +1158,7 @@
     </div>
 
     <div class="footer-bottom">
-      <span>© 2025 TrialPath Inc. All rights reserved.</span>
+      <span>© 2026 TrialPath Inc. All rights reserved.</span>
       <div style="display: flex; gap: 1.5rem;">
         <a href="#">Privacy</a>
         <a href="#">Terms</a>
@@ -1173,9 +1172,13 @@
     const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
     const ADMIN_EMAIL = 'hello@trialpath.com';
 
-    emailjs.init(EMAILJS_PUBLIC_KEY);
+    const hasEmailJs = typeof emailjs !== 'undefined';
+    if (hasEmailJs) {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
 
     if (
+      hasEmailJs &&
       EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' &&
       EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' &&
       EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID'
@@ -1269,9 +1272,11 @@
           Send Message
         `;
         errEl.textContent =
-          EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY'
-            ? 'EmailJS is not configured yet — see the setup notice above.'
-            : 'Sending failed. Please try again or email us directly at hello@trialpath.com.';
+          !hasEmailJs
+            ? 'Email service is temporarily unavailable. Please email us directly at hello@trialpath.com.'
+            : EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY'
+              ? 'EmailJS is not configured yet — see the setup notice above.'
+              : 'Sending failed. Please try again or email us directly at hello@trialpath.com.';
         errEl.style.display = 'block';
       }
     }
