@@ -1159,7 +1159,7 @@
     </div>
 
     <div class="footer-bottom">
-      <span>© 2025 TrialPath Inc. All rights reserved.</span>
+      <span>© 2026 TrialPath Inc. All rights reserved.</span>
       <div style="display: flex; gap: 1.5rem;">
         <a href="#">Privacy</a>
         <a href="#">Terms</a>
@@ -1173,9 +1173,13 @@
     const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
     const ADMIN_EMAIL = 'hello@trialpath.com';
 
-    emailjs.init(EMAILJS_PUBLIC_KEY);
+    const hasEmailJs = typeof emailjs !== 'undefined';
+    if (hasEmailJs) {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
 
     if (
+      hasEmailJs &&
       EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' &&
       EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' &&
       EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID'
@@ -1269,9 +1273,11 @@
           Send Message
         `;
         errEl.textContent =
-          EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY'
-            ? 'EmailJS is not configured yet — see the setup notice above.'
-            : 'Sending failed. Please try again or email us directly at hello@trialpath.com.';
+          !hasEmailJs
+            ? 'Email service is temporarily unavailable. Please email us directly at hello@trialpath.com.'
+            : EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY'
+              ? 'EmailJS is not configured yet — see the setup notice above.'
+              : 'Sending failed. Please try again or email us directly at hello@trialpath.com.';
         errEl.style.display = 'block';
       }
     }
