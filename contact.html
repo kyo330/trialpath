@@ -1,469 +1,1304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us — TrialPath</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --navy:#0B1F3A;--teal:#0D7A6F;--teal-lt:#12A899;
-      --sand:#F4EFE6;--cream:#FDFAF5;--white:#fff;
-      --muted:#6B7A8D;--border:rgba(11,31,58,.12);
-      --shadow:0 8px 40px rgba(11,31,58,.10);
-      --error:#DC2626;--success:#059669;
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    html{scroll-behavior:smooth}
-    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);overflow-x:hidden}
+
+    :root {
+      --navy: #0B1F3A;
+      --teal: #0D7A6F;
+      --teal-lt: #12A899;
+      --sand: #F4EFE6;
+      --cream: #FDFAF5;
+      --white: #FFFFFF;
+      --muted: #6B7A8D;
+      --border: rgba(11, 31, 58, 0.12);
+      --shadow: 0 8px 40px rgba(11, 31, 58, 0.10);
+      --error: #DC2626;
+      --success: #059669;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
 
     /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;height:68px;background:rgba(253,250,245,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-    .logo{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:.5rem}
-    .logo-dot{width:9px;height:9px;border-radius:50%;background:var(--teal-lt);display:inline-block}
-    .nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
-    .nav-links a{text-decoration:none;color:var(--muted);font-size:.9rem;font-weight:500;transition:color .2s}
-    .nav-links a:hover,.nav-links a.active{color:var(--navy)}
-    .btn-nav{background:var(--navy);color:#fff;padding:.55rem 1.3rem;border-radius:100px;font-size:.875rem;font-weight:600;text-decoration:none;transition:background .2s}
-    .btn-nav:hover{background:var(--teal)}
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6vw;
+      height: 68px;
+      background: rgba(253, 250, 245, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--teal-lt);
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--navy);
+    }
+
+    .btn-nav {
+      background: var(--navy);
+      color: #fff;
+      padding: 0.55rem 1.3rem;
+      border-radius: 100px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-nav:hover {
+      background: var(--teal);
+    }
 
     /* HERO */
-    .contact-hero{padding:120px 6vw 60px;background:linear-gradient(135deg,#FDFAF5 0%,#EDF7F6 100%);position:relative;overflow:hidden}
-    .contact-hero::after{content:'';position:absolute;right:-60px;top:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(13,122,111,.12),transparent 70%);pointer-events:none}
-    .contact-hero::before{content:'';position:absolute;left:-80px;bottom:-80px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(11,31,58,.05),transparent 70%);pointer-events:none}
-    .contact-hero-inner{max-width:640px;animation:fadeUp .7s ease both}
-    .page-tag{display:inline-block;background:rgba(13,122,111,.1);color:var(--teal);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .9rem;border-radius:100px;border:1px solid rgba(13,122,111,.2);margin-bottom:1.2rem}
-    .contact-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);line-height:1.12;margin-bottom:1.2rem}
-    .contact-hero h1 em{font-style:italic;color:var(--teal)}
-    .contact-hero p{font-size:1.05rem;color:var(--muted);line-height:1.8;font-weight:300;max-width:500px}
-    .quick-actions{display:flex;gap:.85rem;margin-top:1.8rem;flex-wrap:wrap}
-    .qa-btn{display:inline-flex;align-items:center;gap:.55rem;padding:.7rem 1.4rem;border-radius:100px;font-size:.88rem;font-weight:600;text-decoration:none;transition:all .2s}
-    .qa-btn.call{background:var(--teal);color:#fff}
-    .qa-btn.call:hover{background:#0a6660;transform:translateY(-2px);box-shadow:0 6px 20px rgba(13,122,111,.3)}
-    .qa-btn.mail{background:var(--navy);color:#fff}
-    .qa-btn.mail:hover{background:#0f2d52;transform:translateY(-2px);box-shadow:0 6px 20px rgba(11,31,58,.25)}
-    .qa-btn svg{width:15px;height:15px;flex-shrink:0}
+    .contact-hero {
+      padding: 120px 6vw 20px;
+      background: linear-gradient(135deg, #FDFAF5 0%, #EDF7F6 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-hero::after {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(13, 122, 111, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-hero::before {
+      content: '';
+      position: absolute;
+      left: -80px;
+      bottom: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(11, 31, 58, 0.05), transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-hero-inner {
+      max-width: 640px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .page-tag {
+      display: inline-block;
+      background: rgba(13, 122, 111, 0.1);
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      border: 1px solid rgba(13, 122, 111, 0.2);
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      line-height: 1.12;
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-hero h1 em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .contact-hero p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 500px;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 0.85rem;
+      margin-top: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .qa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: 100px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .qa-btn.call {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .qa-btn.call:hover {
+      background: #0a6660;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(13, 122, 111, 0.3);
+    }
+
+    .qa-btn.mail {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .qa-btn.mail:hover {
+      background: #0f2d52;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(11, 31, 58, 0.25);
+    }
+
+    .qa-btn svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
 
     /* CONTACT CARDS STRIP */
-    .cards-strip{padding:40px 6vw;background:var(--sand);display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
-    .contact-card{display:flex;align-items:flex-start;gap:1rem;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.4rem 1.6rem;transition:transform .2s,box-shadow .2s;text-decoration:none;position:relative;overflow:hidden}
-    .contact-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal-lt));transform:scaleX(0);transform-origin:left;transition:transform .3s}
-    .contact-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-    .contact-card:hover::after{transform:scaleX(1)}
-    .cc-icon{width:44px;height:44px;border-radius:12px;background:rgba(13,122,111,.08);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
-    .cc-body{flex:1}
-    .cc-label{font-size:.75rem;font-weight:700;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem}
-    .cc-value{font-size:.95rem;font-weight:600;color:var(--navy);margin-bottom:.15rem}
-    .cc-note{font-size:.8rem;color:var(--muted);font-weight:300}
-    .cc-action{display:inline-flex;align-items:center;gap:.35rem;margin-top:.55rem;font-size:.75rem;font-weight:700;color:var(--teal);background:rgba(13,122,111,.07);border:1px solid rgba(13,122,111,.15);border-radius:100px;padding:.25rem .7rem;text-decoration:none;transition:background .2s}
-    .cc-action:hover{background:rgba(13,122,111,.18)}
+    .cards-strip {
+      padding: 40px 6vw;
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-top: -30px;
+      position: relative;
+      z-index: 2;
+      border-radius: 24px 24px 0 0;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.4rem 1.6rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-lt));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .cc-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(13, 122, 111, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .cc-body {
+      flex: 1;
+    }
+
+    .cc-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .cc-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.15rem;
+    }
+
+    .cc-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .cc-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.55rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--teal);
+      background: rgba(13, 122, 111, 0.07);
+      border: 1px solid rgba(13, 122, 111, 0.15);
+      border-radius: 100px;
+      padding: 0.25rem 0.7rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .cc-action:hover {
+      background: rgba(13, 122, 111, 0.18);
+    }
 
     /* FORM SECTION */
-    .form-section{padding:70px 6vw 90px;display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start;max-width:1100px;margin:0 auto}
-    .form-left h2{font-family:'DM Serif Display',serif;font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.2;color:var(--navy);margin-bottom:.8rem}
-    .form-left h2 em{font-style:italic;color:var(--teal)}
-    .form-left p{font-size:.95rem;color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.8rem}
-    .response-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);color:var(--success);border-radius:100px;padding:.4rem .9rem;font-size:.8rem;font-weight:600;margin-bottom:2rem}
-    .response-badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+    .form-section {
+      padding: 50px 6vw 80px;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-    /* FAQ inside form-left */
-    .faq-title{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--navy);margin-bottom:.8rem}
-    .faq-item{border-bottom:1px solid var(--border);padding:.65rem 0;cursor:pointer}
-    .faq-q{font-size:.855rem;font-weight:500;color:var(--navy);display:flex;justify-content:space-between;align-items:center;user-select:none}
-    .faq-q .chevron{font-size:.72rem;color:var(--muted);transition:transform .25s}
-    .faq-a{font-size:.82rem;color:var(--muted);font-weight:300;line-height:1.7;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
-    .faq-item.open .faq-a{max-height:200px;padding-top:.45rem}
-    .faq-item.open .chevron{transform:rotate(180deg)}
+    .form-left h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+      line-height: 1.2;
+      color: var(--navy);
+      margin-bottom: 0.8rem;
+    }
 
-    /* THE FORM BOX */
-    .form-box{background:var(--white);border:1px solid var(--border);border-radius:24px;padding:2.5rem;box-shadow:var(--shadow)}
-    .form-box-header{margin-bottom:1.5rem}
-    .form-box-header h3{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--navy);margin-bottom:.3rem}
-    .form-box-header p{font-size:.875rem;color:var(--muted);font-weight:300}
+    .form-left h2 em {
+      font-style: italic;
+      color: var(--teal);
+    }
 
-    .setup-notice{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:.9rem 1rem;margin-bottom:1.3rem;font-size:.78rem;color:#78350F;line-height:1.65}
-    .setup-notice strong{display:block;font-size:.82rem;margin-bottom:.3rem;color:#92400E}
-    .setup-notice code{background:rgba(0,0,0,.07);border-radius:4px;padding:.1rem .3rem;font-family:monospace;font-size:.76rem}
+    .form-left p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 1.8rem;
+    }
 
-    .form-error{background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:.75rem 1rem;font-size:.82rem;color:#B91C1C;margin-bottom:1rem;display:none;line-height:1.5}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    .form-group{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem}
-    .form-group label{font-size:.8rem;font-weight:600;color:var(--navy);letter-spacing:.03em}
-    .form-group label span{color:var(--teal)}
-    .form-group input,.form-group textarea,.form-group select{width:100%;padding:.7rem .95rem;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--navy);background:var(--cream);transition:border-color .2s,box-shadow .2s;outline:none;resize:none}
-    .form-group input::placeholder,.form-group textarea::placeholder{color:#aab2be}
-    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,122,111,.1)}
-    .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A8D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.2rem;cursor:pointer}
-    .form-group textarea{min-height:120px;line-height:1.6}
-    .char-count{font-size:.75rem;color:var(--muted);text-align:right;margin-top:.25rem}
+    .response-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(5, 150, 105, 0.08);
+      border: 1px solid rgba(5, 150, 105, 0.2);
+      color: var(--success);
+      border-radius: 100px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
 
-    .btn-submit{width:100%;background:var(--navy);color:#fff;padding:.9rem 1.5rem;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;border:none;cursor:pointer;transition:background .25s,transform .15s;display:flex;align-items:center;justify-content:center;gap:.6rem;margin-top:.5rem}
-    .btn-submit:hover:not(:disabled){background:var(--teal)}
-    .btn-submit:active{transform:scale(.98)}
-    .btn-submit:disabled{opacity:.6;cursor:not-allowed}
-    .btn-submit svg{width:16px;height:16px}
-    .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
-    @keyframes spin{to{transform:rotate(360deg)}}
+    .response-badge .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+    }
 
-    .success-state{display:none;flex-direction:column;align-items:center;text-align:center;padding:2.5rem 1rem}
-    .success-icon{width:70px;height:70px;border-radius:50%;background:rgba(5,150,105,.1);border:2px solid rgba(5,150,105,.25);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:1.2rem;animation:popIn .4s cubic-bezier(.175,.885,.32,1.275) both}
-    @keyframes popIn{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
-    .success-state h3{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--navy);margin-bottom:.5rem}
-    .success-state p{font-size:.9rem;color:var(--muted);font-weight:300;line-height:1.7;max-width:300px}
-    .btn-back{margin-top:1.5rem;background:none;border:1.5px solid var(--border);color:var(--navy);padding:.6rem 1.4rem;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:600;cursor:pointer;transition:border-color .2s,color .2s}
-    .btn-back:hover{border-color:var(--teal);color:var(--teal)}
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.5;
+        transform: scale(1.4);
+      }
+    }
+
+    /* FAQ */
+    .faq-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.8rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 0.65rem 0;
+      cursor: pointer;
+    }
+
+    .faq-q {
+      font-size: 0.855rem;
+      font-weight: 500;
+      color: var(--navy);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .faq-q .chevron {
+      font-size: 0.72rem;
+      color: var(--muted);
+      transition: transform 0.25s;
+    }
+
+    .faq-a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding-top: 0.45rem;
+    }
+
+    .faq-item.open .chevron {
+      transform: rotate(180deg);
+    }
+
+    /* FORM BOX */
+    .form-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 2.8rem;
+      box-shadow: 0 20px 60px rgba(11, 31, 58, 0.08);
+    }
+
+    .form-box-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-box-header h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-box-header p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .setup-notice {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.3rem;
+      font-size: 0.78rem;
+      color: #78350F;
+      line-height: 1.65;
+    }
+
+    .setup-notice strong {
+      display: block;
+      font-size: 0.82rem;
+      margin-bottom: 0.3rem;
+      color: #92400E;
+    }
+
+    .setup-notice code {
+      background: rgba(0, 0, 0, 0.07);
+      border-radius: 4px;
+      padding: 0.1rem 0.3rem;
+      font-family: monospace;
+      font-size: 0.76rem;
+    }
+
+    .form-error {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      color: #B91C1C;
+      margin-bottom: 1rem;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.03em;
+    }
+
+    .form-group label span {
+      color: var(--teal);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.7rem 0.95rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--navy);
+      background: var(--cream);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      resize: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #AAB2BE;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13, 122, 111, 0.1);
+    }
+
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A8D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.2rem;
+      cursor: pointer;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .char-count {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 0.25rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--navy);
+      color: #fff;
+      padding: 0.9rem 1.5rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: var(--teal);
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-submit svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .success-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2.5rem 1rem;
+    }
+
+    .success-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(5, 150, 105, 0.1);
+      border: 2px solid rgba(5, 150, 105, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      animation: popIn 0.4s cubic-bezier(.175, .885, .32, 1.275) both;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .success-state h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .success-state p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    .btn-back {
+      margin-top: 1.5rem;
+      background: none;
+      border: 1.5px solid var(--border);
+      color: var(--navy);
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-back:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
 
     /* TEAM STRIP */
-    .team-strip{background:var(--sand);padding:50px 6vw}
-    .team-avatars{display:flex;justify-content:center;align-items:center}
-    .ta{width:44px;height:44px;border-radius:50%;border:3px solid var(--sand);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;font-family:'DM Serif Display',serif;margin-left:-12px}
-    .ta:first-child{margin-left:0}
-    .team-strip-inner{display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap}
-    .team-strip-text{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--navy)}
-    .team-strip-text em{font-style:italic;color:var(--teal)}
+    .team-strip {
+      background: var(--sand);
+      padding: 40px 6vw;
+    }
+
+    .team-strip-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .team-avatars {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .ta {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 3px solid var(--sand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      font-family: 'DM Serif Display', serif;
+      margin-left: -12px;
+    }
+
+    .ta:first-child {
+      margin-left: 0;
+    }
+
+    .team-strip-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--navy);
+    }
+
+    .team-strip-text em {
+      font-style: italic;
+      color: var(--teal);
+    }
 
     /* FOOTER */
-    footer{background:var(--navy);color:rgba(255,255,255,.5);padding:3.5rem 6vw 2rem}
-    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08)}
-    .footer-brand .logo{color:#fff;margin-bottom:.8rem;display:block}
-    .footer-brand p{font-size:.85rem;line-height:1.7;max-width:240px}
-    .footer-col h4{color:rgba(255,255,255,.85);font-size:.85rem;font-weight:600;margin-bottom:1rem}
-    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
-    .footer-col ul a{text-decoration:none;color:rgba(255,255,255,.45);font-size:.85rem;transition:color .2s}
-    .footer-col ul a:hover{color:var(--teal-lt)}
-    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.8rem;font-size:.8rem;flex-wrap:wrap;gap:1rem}
-    .footer-bottom a{color:rgba(255,255,255,.4);text-decoration:none}
-
-    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-
-    @media(max-width:900px){
-      .cards-strip{grid-template-columns:1fr}
-      .form-section{grid-template-columns:1fr;gap:2.5rem}
-      .footer-grid{grid-template-columns:1fr 1fr}
+    footer {
+      background: var(--navy);
+      color: rgba(255, 255, 255, 0.5);
+      padding: 3rem 6vw 1.8rem;
     }
-    @media(max-width:600px){
-      .nav-links{display:none}
-      .form-row{grid-template-columns:1fr}
-      .footer-grid{grid-template-columns:1fr}
-      .quick-actions{flex-direction:column}
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-brand .logo {
+      color: #fff;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      max-width: 240px;
+    }
+
+    .footer-col h4 {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .footer-col ul a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover {
+      color: var(--teal-lt);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.8rem;
+      font-size: 0.8rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .cards-strip {
+        grid-template-columns: 1fr;
+        margin-top: 0;
+        border-radius: 0;
+      }
+
+      .form-section {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links {
+        display: none;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-actions {
+        flex-direction: column;
+      }
+
+      .contact-hero {
+        padding: 110px 6vw 20px;
+      }
+
+      .form-box {
+        padding: 2rem 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
 
-<nav>
-  <a class="logo" href="index.html"><span class="logo-dot"></span> TrialPath</a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About Us</a></li>
-    <li><a href="course.html">CDM Course</a></li>
-    <li><a href="blog.html">Blog</a></li>
-    <li><a href="contact.html" class="active">Contact</a></li>
-    <li><a href="payment.html" class="btn-nav">Enroll Now</a></li>
-  </ul>
-</nav>
+  <nav>
+    <a class="logo" href="index.html"><span class="logo-dot"></span> TrialPath</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="course.html">CDM Course</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="payment.html" class="btn-nav">Enroll Now</a></li>
+    </ul>
+  </nav>
 
-<!-- HERO -->
-<section class="contact-hero">
-  <div class="contact-hero-inner">
-    <div class="page-tag">✉️ Contact Us</div>
-    <h1>We'd love to<br><em>hear from you</em></h1>
-    <p>Whether you have questions about the CDM course, need career guidance, or want to explore corporate training — our team is here and ready to help.</p>
-    <div class="quick-actions">
-      <a href="tel:+11234567890" class="qa-btn call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.17 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span>Call +1 (123) 456-7890</span></a>
-      <a href="mailto:hello@trialpath.com" class="qa-btn mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>hello@trialpath.com</span></a>
-    </div>
-  </div>
-</section>
+  <!-- HERO -->
+  <section class="contact-hero">
+    <div class="contact-hero-inner">
+      <div class="page-tag">✉️ Contact Us</div>
+      <h1>We'd love to<br /><em>hear from you</em></h1>
+      <p>
+        Whether you have questions about the CDM course, need career guidance, or want to
+        explore corporate training — our team is here and ready to help.
+      </p>
 
-<!-- CONTACT CARDS STRIP -->
-<div class="cards-strip">
-  <a class="contact-card" href="mailto:hello@trialpath.com">
-    <div class="cc-icon">📧</div>
-    <div class="cc-body">
-      <div class="cc-label">Email</div>
-      <div class="cc-value">hello@trialpath.com</div>
-      <div class="cc-note">For general enquiries &amp; course questions</div>
-      <a href="mailto:hello@trialpath.com" class="cc-action">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Open in mail app
-      </a>
-    </div>
-  </a>
-  <a class="contact-card" href="tel:+11234567890">
-    <div class="cc-icon">📞</div>
-    <div class="cc-body">
-      <div class="cc-label">Phone</div>
-      <div class="cc-value">+1 (123) 456-7890</div>
-      <div class="cc-note">Mon–Fri, 9 AM – 6 PM ET</div>
-      <a href="tel:+11234567890" class="cc-action">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.17 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-        Tap to call
-      </a>
-    </div>
-  </a>
-  <div class="contact-card" style="cursor:default">
-    <div class="cc-icon">🏢</div>
-    <div class="cc-body">
-      <div class="cc-label">Location</div>
-      <div class="cc-value">United States — Remote</div>
-      <div class="cc-note">Fully remote team · Serving learners across the US &amp; globally</div>
-    </div>
-  </div>
-</div>
+      <div class="quick-actions">
+        <a href="tel:+11234567890" class="qa-btn call">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.17 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path>
+          </svg>
+          <span>Call +1 (123) 456-7890</span>
+        </a>
 
-<!-- FORM SECTION -->
-<div class="form-section">
+        <a href="mailto:hello@trialpath.com" class="qa-btn mail">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>hello@trialpath.com</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-  <!-- LEFT: context + FAQ -->
-  <div class="form-left">
-    <h2>Send us a<br><em>message</em></h2>
-    <p>Fill out the form and we'll get back to you within 24 hours. Our team reads every single submission personally.</p>
-    <div class="response-badge"><span class="pulse"></span> Avg. response: under 6 hours</div>
+  <!-- CONTACT CARDS STRIP -->
+  <div class="cards-strip">
+    <a class="contact-card" href="mailto:hello@trialpath.com">
+      <div class="cc-icon">📧</div>
+      <div class="cc-body">
+        <div class="cc-label">Email</div>
+        <div class="cc-value">hello@trialpath.com</div>
+        <div class="cc-note">For general enquiries &amp; course questions</div>
+        <span class="cc-action">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          Open in mail app
+        </span>
+      </div>
+    </a>
 
-    <div class="faq-title">Quick answers</div>
-    <div class="faq-item">
-      <div class="faq-q">When does the next batch start? <span class="chevron">▼</span></div>
-      <div class="faq-a">New batches start every month. Once you enroll, you'll receive onboarding details within 24 hours with your exact batch schedule.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Do you offer payment plans? <span class="chevron">▼</span></div>
-      <div class="faq-a">Yes! We offer flexible 3, 6, and 12-month payment options. Reach out and we'll help you find a plan that works for your budget.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Is there a free demo class? <span class="chevron">▼</span></div>
-      <div class="faq-a">Absolutely. You can attend a free orientation session before committing. Fill out the form and select "Free Demo" as your enquiry type.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Do you offer corporate training? <span class="chevron">▼</span></div>
-      <div class="faq-a">Yes — we work with CROs and pharma companies to upskill their CDM teams. Select "Corporate Training" in the form and our B2B team will reach out.</div>
+    <a class="contact-card" href="tel:+11234567890">
+      <div class="cc-icon">📞</div>
+      <div class="cc-body">
+        <div class="cc-label">Phone</div>
+        <div class="cc-value">+1 (123) 456-7890</div>
+        <div class="cc-note">Mon–Fri, 9 AM – 6 PM ET</div>
+        <span class="cc-action">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.17 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path>
+          </svg>
+          Tap to call
+        </span>
+      </div>
+    </a>
+
+    <div class="contact-card" style="cursor: default;">
+      <div class="cc-icon">🏢</div>
+      <div class="cc-body">
+        <div class="cc-label">Location</div>
+        <div class="cc-value">United States — Remote</div>
+        <div class="cc-note">Fully remote team · Serving learners across the US &amp; globally</div>
+      </div>
     </div>
   </div>
 
-  <!-- RIGHT: THE FORM -->
-  <div class="form-box" id="formWrap">
-    <div id="formView">
-      <div class="form-box-header">
-        <h3>Get in touch</h3>
-        <p>We'll get back to you within 24 hours — usually much sooner.</p>
+  <!-- FORM SECTION -->
+  <div class="form-section">
+
+    <!-- LEFT -->
+    <div class="form-left">
+      <h2>Send us a<br /><em>message</em></h2>
+      <p>
+        Fill out the form and we'll get back to you within 24 hours. Our team reads every
+        single submission personally.
+      </p>
+
+      <div class="response-badge">
+        <span class="pulse"></span>
+        Avg. response: under 6 hours
       </div>
 
-      <!-- SETUP NOTICE — remove after configuring EmailJS -->
-      <div class="setup-notice" id="setupNotice">
-        <strong>⚙️ One-time setup to activate live email delivery</strong>
-        1. Sign up free at <strong>emailjs.com</strong><br>
-        2. Add an Email Service (Gmail / Outlook) → copy <code>Service ID</code><br>
-        3. Create a Template with variables: <code>{{from_name}}</code> <code>{{from_email}}</code> <code>{{phone}}</code> <code>{{enquiry}}</code> <code>{{message}}</code> <code>{{sent_at}}</code> — set To Email → <code>hello@trialpath.com</code> → copy <code>Template ID</code><br>
-        4. Account → API Keys → copy <code>Public Key</code><br>
-        5. Paste all three into the constants at the top of the &lt;script&gt; block.
-      </div>
+      <div class="faq-title">Quick answers</div>
 
-      <div class="form-error" id="formError"></div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>First name <span>*</span></label>
-          <input type="text" placeholder="Jane" id="fname"/>
-        </div>
-        <div class="form-group">
-          <label>Last name <span>*</span></label>
-          <input type="text" placeholder="Smith" id="lname"/>
+      <div class="faq-item">
+        <div class="faq-q">When does the next batch start? <span class="chevron">▼</span></div>
+        <div class="faq-a">
+          New batches start every month. Once you enroll, you'll receive onboarding details
+          within 24 hours with your exact batch schedule.
         </div>
       </div>
 
-      <div class="form-group">
-        <label>Email address <span>*</span></label>
-        <input type="email" placeholder="you@example.com" id="email"/>
+      <div class="faq-item">
+        <div class="faq-q">Do you offer payment plans? <span class="chevron">▼</span></div>
+        <div class="faq-a">
+          Yes! We offer flexible 3, 6, and 12-month payment options. Reach out and we'll
+          help you find a plan that works for your budget.
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Phone</label>
-        <input type="tel" placeholder="+1 (555) 000-0000" id="phone"/>
+      <div class="faq-item">
+        <div class="faq-q">Is there a free demo class? <span class="chevron">▼</span></div>
+        <div class="faq-a">
+          Absolutely. You can attend a free orientation session before committing. Fill out
+          the form and select "Free Demo" as your enquiry type.
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Enquiry type <span>*</span></label>
-        <select id="enquiry">
-          <option value="" disabled selected>Select a topic…</option>
-          <option>CDM Course — General Questions</option>
-          <option>Free Demo Class</option>
-          <option>Pricing &amp; Payment Options</option>
-          <option>Corporate Training</option>
-          <option>Technical / Platform Issue</option>
-          <option>Other</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Your message <span>*</span></label>
-        <textarea placeholder="Tell us a bit about your background and what you'd like to know…" id="message" maxlength="600"></textarea>
-        <div class="char-count"><span id="charCount">0</span> / 600</div>
-      </div>
-
-      <button class="btn-submit" id="submitBtn" onclick="submitForm()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Send Message
-      </button>
+      
     </div>
 
-    <div class="success-state" id="successView">
-      <div class="success-icon">✅</div>
-      <h3>Message sent!</h3>
-      <p>Thanks for reaching out. One of our team members will get back to you within 24 hours — usually much sooner.</p>
-      <p style="margin-top:.5rem;font-size:.82rem;color:var(--muted)">Check your inbox for a confirmation email.</p>
-      <button class="btn-back" onclick="resetForm()">← Send another message</button>
+    <!-- RIGHT -->
+    <div class="form-box" id="formWrap">
+      <div id="formView">
+        <div class="form-box-header">
+          <h3>Get in touch</h3>
+          <p>We'll get back to you within 24 hours — usually much sooner.</p>
+        </div>
+
+        <div class="setup-notice" id="setupNotice">
+          <strong>⚙️ One-time setup to activate live email delivery</strong>
+          1. Sign up free at <strong>emailjs.com</strong><br />
+          2. Add an Email Service (Gmail / Outlook) → copy <code>Service ID</code><br />
+          3. Create a Template with variables:
+          <code>{{from_name}}</code>
+          <code>{{from_email}}</code>
+          <code>{{phone}}</code>
+          <code>{{enquiry}}</code>
+          <code>{{message}}</code>
+          <code>{{sent_at}}</code>
+          — set To Email → <code>hello@trialpath.com</code> → copy <code>Template ID</code><br />
+          4. Account → API Keys → copy <code>Public Key</code><br />
+          5. Paste all three into the constants at the top of the &lt;script&gt; block.
+        </div>
+
+        <div class="form-error" id="formError"></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name <span>*</span></label>
+            <input type="text" placeholder="Jane" id="fname" />
+          </div>
+
+          <div class="form-group">
+            <label>Last name <span>*</span></label>
+            <input type="text" placeholder="Smith" id="lname" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email address <span>*</span></label>
+          <input type="email" placeholder="you@example.com" id="email" />
+        </div>
+
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" placeholder="+1 (555) 000-0000" id="phone" />
+        </div>
+
+        <div class="form-group">
+          <label>Enquiry type <span>*</span></label>
+          <select id="enquiry">
+            <option value="" disabled selected>Select a topic…</option>
+            <option>CDM Course — General Questions</option>
+            <option>Free Demo Class</option>
+            <option>Pricing &amp; Payment Options</option>
+            <option>Corporate Training</option>
+            <option>Technical / Platform Issue</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Your message <span>*</span></label>
+          <textarea
+            placeholder="Tell us a bit about your background and what you'd like to know…"
+            id="message"
+            maxlength="600"
+          ></textarea>
+          <div class="char-count"><span id="charCount">0</span> / 600</div>
+        </div>
+
+        <button class="btn-submit" id="submitBtn" onclick="submitForm()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          Send Message
+        </button>
+      </div>
+
+      <div class="success-state" id="successView">
+        <div class="success-icon">✅</div>
+        <h3>Message sent!</h3>
+        <p>
+          Thanks for reaching out. One of our team members will get back to you within 24
+          hours — usually much sooner.
+        </p>
+        <p style="margin-top: 0.5rem; font-size: 0.82rem; color: var(--muted);">
+          Check your inbox for a confirmation email.
+        </p>
+        <button class="btn-back" onclick="resetForm()">← Send another message</button>
+      </div>
     </div>
   </div>
 
-</div>
-
-<!-- TEAM STRIP -->
-<div class="team-strip">
-  <div class="team-strip-inner">
-    <div class="team-avatars">
-      <div class="ta" style="background:var(--teal)">SL</div>
-      <div class="ta" style="background:#7C3AED">DM</div>
-      <div class="ta" style="background:#D97706">JR</div>
-      <div class="ta" style="background:#DC2626">MC</div>
-    </div>
-    <div class="team-strip-text">Our team is <em>real people</em> — not bots. We read every message.</div>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a class="logo" href="index.html"><span class="logo-dot"></span> TrialPath</a>
-      <p>Empowering clinical research professionals with world-class education since 2019.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Platform</h4>
-      <ul><li><a href="course.html">CDM Course</a></li><li><a href="index.html#courses">All Courses</a></li><li><a href="payment.html">Pricing</a></li></ul>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Refund Policy</a></li></ul>
+  <!-- TEAM STRIP -->
+  <div class="team-strip">
+    <div class="team-strip-inner">
+      <div class="team-avatars">
+        <div class="ta" style="background: var(--teal);">SL</div>
+        <div class="ta" style="background: #7C3AED;">DM</div>
+        <div class="ta" style="background: #D97706;">JR</div>
+        <div class="ta" style="background: #DC2626;">MC</div>
+      </div>
+      <div class="team-strip-text">Our team is <em>real people</em> — not bots. We read every message.</div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2025 TrialPath Inc. All rights reserved.</span>
-    <div style="display:flex;gap:1.5rem"><a href="#">Privacy</a><a href="#">Terms</a></div>
-  </div>
-</footer>
 
-<script>
-  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
-  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-  const ADMIN_EMAIL         = 'hello@trialpath.com';
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="index.html"><span class="logo-dot"></span> TrialPath</a>
+        <p>Empowering clinical research professionals with world-class education since 2019.</p>
+      </div>
 
-  emailjs.init(EMAILJS_PUBLIC_KEY);
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="course.html">CDM Course</a></li>
+          <li><a href="index.html#courses">All Courses</a></li>
+          <li><a href="payment.html">Pricing</a></li>
+        </ul>
+      </div>
 
-  if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' &&
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Refund Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 TrialPath Inc. All rights reserved.</span>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+    const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+    const ADMIN_EMAIL = 'hello@trialpath.com';
+
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+
+    if (
+      EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' &&
       EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' &&
-      EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID') {
-    const n = document.getElementById('setupNotice');
-    if (n) n.style.display = 'none';
-  }
+      EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID'
+    ) {
+      const n = document.getElementById('setupNotice');
+      if (n) n.style.display = 'none';
+    }
 
-  // Char counter
-  const msgEl = document.getElementById('message');
-  const counter = document.getElementById('charCount');
-  msgEl.addEventListener('input', () => {
-    counter.textContent = msgEl.value.length;
-    counter.style.color = msgEl.value.length > 550 ? '#DC2626' : '#6B7A8D';
-  });
+    const msgEl = document.getElementById('message');
+    const counter = document.getElementById('charCount');
 
-  // FAQ accordion
-  document.querySelectorAll('.faq-item').forEach(item => {
-    item.querySelector('.faq-q').addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
+    msgEl.addEventListener('input', () => {
+      counter.textContent = msgEl.value.length;
+      counter.style.color = msgEl.value.length > 550 ? '#DC2626' : '#6B7A8D';
     });
-  });
 
-  async function submitForm() {
-    const fname   = document.getElementById('fname').value.trim();
-    const lname   = document.getElementById('lname').value.trim();
-    const email   = document.getElementById('email').value.trim();
-    const phone   = document.getElementById('phone').value.trim();
-    const enquiry = document.getElementById('enquiry').value;
-    const message = msgEl.value.trim();
-    const errEl   = document.getElementById('formError');
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-q').addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
 
-    const required = [
-      { id: 'fname',   val: fname },
-      { id: 'email',   val: email },
-      { id: 'enquiry', val: enquiry },
-      { id: 'message', val: message },
-    ];
-    let invalid = false;
-    required.forEach(f => {
-      const el = document.getElementById(f.id);
-      if (!f.val) {
-        el.style.borderColor = '#DC2626';
-        el.addEventListener('input',  () => el.style.borderColor = '', { once: true });
-        el.addEventListener('change', () => el.style.borderColor = '', { once: true });
-        invalid = true;
+    async function submitForm() {
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const enquiry = document.getElementById('enquiry').value;
+      const message = msgEl.value.trim();
+      const errEl = document.getElementById('formError');
+
+      const required = [
+        { id: 'fname', val: fname },
+        { id: 'email', val: email },
+        { id: 'enquiry', val: enquiry },
+        { id: 'message', val: message }
+      ];
+
+      let invalid = false;
+
+      required.forEach(f => {
+        const el = document.getElementById(f.id);
+        if (!f.val) {
+          el.style.borderColor = '#DC2626';
+          el.addEventListener('input', () => el.style.borderColor = '', { once: true });
+          el.addEventListener('change', () => el.style.borderColor = '', { once: true });
+          invalid = true;
+        }
+      });
+
+      if (invalid) {
+        errEl.textContent = 'Please fill in all required fields.';
+        errEl.style.display = 'block';
+        return;
       }
-    });
-    if (invalid) {
-      errEl.textContent = 'Please fill in all required fields.';
-      errEl.style.display = 'block';
-      return;
+
+      errEl.style.display = 'none';
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner"></div> Sending…';
+
+      const templateParams = {
+        to_email: ADMIN_EMAIL,
+        from_name: (fname + ' ' + lname).trim(),
+        from_email: email,
+        phone: phone || 'Not provided',
+        enquiry,
+        message,
+        sent_at: new Date().toLocaleString('en-US', {
+          timeZone: 'America/New_York',
+          dateStyle: 'full',
+          timeStyle: 'short'
+        })
+      };
+
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        document.getElementById('formView').style.display = 'none';
+        document.getElementById('successView').style.display = 'flex';
+      } catch (err) {
+        console.error('EmailJS error:', err);
+        btn.disabled = false;
+        btn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          Send Message
+        `;
+        errEl.textContent =
+          EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY'
+            ? 'EmailJS is not configured yet — see the setup notice above.'
+            : 'Sending failed. Please try again or email us directly at hello@trialpath.com.';
+        errEl.style.display = 'block';
+      }
     }
-    errEl.style.display = 'none';
 
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.innerHTML = '<div class="spinner"></div> Sending…';
+    function resetForm() {
+      document.getElementById('formView').style.display = 'block';
+      document.getElementById('successView').style.display = 'none';
 
-    const templateParams = {
-      to_email:   ADMIN_EMAIL,
-      from_name:  (fname + ' ' + lname).trim(),
-      from_email: email,
-      phone:      phone || 'Not provided',
-      enquiry,
-      message,
-      sent_at: new Date().toLocaleString('en-US', {
-        timeZone: 'America/New_York', dateStyle: 'full', timeStyle: 'short'
-      }),
-    };
+      ['fname', 'lname', 'email', 'phone', 'message'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
 
-    try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-      document.getElementById('formView').style.display = 'none';
-      document.getElementById('successView').style.display = 'flex';
-    } catch (err) {
-      console.error('EmailJS error:', err);
+      document.getElementById('enquiry').selectedIndex = 0;
+      document.getElementById('formError').style.display = 'none';
+      counter.textContent = '0';
+      counter.style.color = '#6B7A8D';
+
+      const btn = document.getElementById('submitBtn');
       btn.disabled = false;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message';
-      errEl.textContent = EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY'
-        ? 'EmailJS is not configured yet — see the setup notice above.'
-        : 'Sending failed. Please try again or email us directly at hello@trialpath.com.';
-      errEl.style.display = 'block';
+      btn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+        Send Message
+      `;
     }
-  }
-
-  function resetForm() {
-    document.getElementById('formView').style.display = 'block';
-    document.getElementById('successView').style.display = 'none';
-    ['fname','lname','email','phone','message'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('enquiry').selectedIndex = 0;
-    counter.textContent = '0';
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = false;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message';
-  }
-</script>
+  </script>
 </body>
 </html>
